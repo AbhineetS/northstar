@@ -1,0 +1,187 @@
+@import "tailwindcss";
+
+@theme {
+  /* Refined Premium Color System */
+  --color-background: #FCFCFA;
+  --color-surface: #FFFFFF;
+  --color-surface-elevated: rgba(255, 255, 255, 0.95);
+  --color-surface-glass: rgba(255, 255, 255, 0.6);
+  --color-surface-glass-strong: rgba(255, 255, 255, 0.85);
+  
+  --color-border-subtle: rgba(24, 24, 27, 0.04);
+  --color-border-strong: rgba(24, 24, 27, 0.08);
+  
+  --color-primary: #18181B; /* deep charcoal */
+  --color-primary-glow: rgba(24, 24, 27, 0.05);
+  
+  /* Monochromatic Refined Accents */
+  --color-fifa-blue: #1E293B;
+  --color-fifa-red: #334155;
+  --color-fifa-green: #475569;
+  --color-fifa-gold: #64748B;
+  --color-fifa-burgundy: #94A3B8;
+  
+  --color-text-main: #18181B;
+  --color-text-secondary: #52525B;
+  --color-text-muted: #A1A1AA;
+  --color-text-inverted: #FFFFFF;
+
+  /* Premium Typography Scale */
+  --font-sans: var(--font-jakarta), system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+  --font-display: var(--font-jakarta), system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+  --font-mono: "Geist Mono", "JetBrains Mono", monospace;
+
+  /* Shadows - Hyper-Soft Editorial Inspired */
+  --shadow-premium: 0 8px 40px rgba(0,0,0,0.03), 0 2px 4px rgba(0,0,0,0.02);
+  --shadow-premium-hover: 0 24px 60px rgba(0,0,0,0.06), 0 8px 16px rgba(0,0,0,0.03);
+  --shadow-glass: 0 12px 40px rgba(0, 0, 0, 0.03);
+  --shadow-inner-soft: inset 0 2px 4px rgba(255,255,255,0.4);
+
+  /* Border Radius - Extreme Roundedness */
+  --radius-sm: 10px;
+  --radius-md: 14px;
+  --radius-lg: 20px;
+  --radius-xl: 28px;
+  --radius-2xl: 36px;
+  --radius-3xl: 48px;
+  --radius-4xl: 64px;
+  --radius-pill: 9999px;
+  
+  /* Custom easings */
+  --ease-spring: cubic-bezier(0.175, 0.885, 0.32, 1.275);
+  --ease-apple: cubic-bezier(0.32, 0.72, 0, 1);
+  --ease-in-out-apple: cubic-bezier(0.65, 0, 0.35, 1);
+}
+
+@layer base {
+  :root {
+    --background: #FCFCFA;
+    --foreground: #18181B;
+  }
+  
+  html {
+    height: 100%;
+    color-scheme: light;
+    /* Smooth scrolling globally */
+    scroll-behavior: smooth;
+  }
+  
+  body {
+    min-height: 100%;
+    background-color: var(--background);
+    color: var(--foreground);
+    font-family: var(--font-sans);
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+    line-height: 1.6;
+    /* Remove default margins/paddings */
+    margin: 0;
+    padding: 0;
+  }
+
+  h1, h2, h3, h4, h5, h6 {
+    font-family: var(--font-display);
+    font-weight: 500;
+    line-height: 1.1;
+    letter-spacing: -0.05em;
+  }
+
+  /* Thin strokes for all lucide icons for premium feel */
+  svg.lucide {
+    stroke-width: 1.25px;
+  }
+}
+
+/* Base custom classes for elements */
+@layer utilities {
+  .glass-panel {
+    @apply bg-surface-glass backdrop-blur-2xl border border-white/60 shadow-glass;
+  }
+  
+  .glass-panel-strong {
+    @apply bg-surface-glass-strong backdrop-blur-3xl border border-white/80 shadow-premium;
+  }
+  
+  .text-gradient {
+    @apply bg-clip-text text-transparent bg-gradient-to-r from-primary to-text-secondary;
+  }
+  
+  .text-gradient-fifa {
+    @apply bg-clip-text text-transparent bg-gradient-to-r from-fifa-blue via-fifa-red to-fifa-green;
+  }
+  
+  .bg-grain {
+    position: relative;
+  }
+  .bg-grain::before {
+    content: "";
+    position: absolute;
+    inset: 0;
+    background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 200 200' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noiseFilter'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.8' numOctaves='3' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noiseFilter)'/%3E%3C/svg%3E");
+    background-repeat: repeat;
+    background-size: 100px 100px;
+    opacity: 0.04;
+    pointer-events: none;
+    mix-blend-mode: multiply;
+    z-index: 10;
+  }
+}
+
+/* Animations */
+@keyframes slow-pan {
+  0% { background-position: 0% 0%; }
+  50% { background-position: 100% 100%; }
+  100% { background-position: 0% 0%; }
+  }
+  
+.animate-bg-pan {
+  background-size: 200% 200%;
+  animation: slow-pan 30s ease-in-out infinite;
+}
+
+@keyframes sweep {
+  0% { transform: translateX(-100%) skewX(-15deg); }
+  100% { transform: translateX(200%) skewX(-15deg); }
+}
+
+.animate-sweep {
+  animation: sweep 3s cubic-bezier(0.4, 0, 0.2, 1) infinite;
+}
+
+@keyframes blob {
+  0% { transform: translate(0px, 0px) scale(1); }
+  33% { transform: translate(30px, -50px) scale(1.1); }
+  66% { transform: translate(-20px, 20px) scale(0.9); }
+  100% { transform: translate(0px, 0px) scale(1); }
+}
+
+.animate-blob {
+  animation: blob 20s infinite alternate cubic-bezier(0.32, 0.72, 0, 1);
+  will-change: transform;
+}
+
+.animation-delay-2000 {
+  animation-delay: 2s;
+}
+
+.animation-delay-4000 {
+  animation-delay: 4s;
+}
+
+/* Hide Next.js dev indicator aggressively */
+nextjs-portal, 
+[data-nextjs-toast],
+#__next-build-watcher,
+#nextjs-dev-indicator {
+  display: none !important;
+  opacity: 0 !important;
+  visibility: hidden !important;
+  pointer-events: none !important;
+  z-index: -9999 !important;
+}
+
+@keyframes shimmer {
+  100% {
+    transform: translateX(100%);
+  }
+}
