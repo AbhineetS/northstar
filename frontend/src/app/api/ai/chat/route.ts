@@ -11,6 +11,15 @@ const ChatRequestSchema = z.object({
   context: z.record(z.string(), z.any()).optional()
 });
 
+/**
+ * POST handler for the /api/ai/chat endpoint.
+ * Processes incoming chat messages, applies context, and streams back responses
+ * from the Google Gemini Gen AI model. Features built-in rate limiting and 
+ * input validation.
+ * 
+ * @param req - The Next.js request object
+ * @returns A streaming response with the AI's answer, or an error payload
+ */
 export async function POST(req: NextRequest) {
   // Rate limit: 10 requests per minute
   const rl = rateLimit(req, { limit: 10, windowMs: 60000 });

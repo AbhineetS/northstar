@@ -3,6 +3,12 @@ import { useApiStore } from "../store/useApiStore";
 
 export class LiveWeatherService implements IWeatherService {
 
+  /**
+   * Fetches the current weather for a specific location.
+   * @param lat - The latitude
+   * @param lon - The longitude
+   * @returns A promise resolving to an IWeatherCondition object with temperature and status
+   */
   async getCurrentWeather(lat: number, lon: number): Promise<IWeatherCondition> {
     useApiStore.getState().startRequest();
     try {

@@ -55,7 +55,9 @@ export const VolunteerCopilot = () => {
       setMessages([...newMessages, { role: "assistant", content: streamText }]);
     } catch (e) {
       console.error(e);
-      setResponse("Failed to connect to translation matrix.");
+      const errorMsg = "Failed to connect to translation matrix.";
+      setResponse(errorMsg);
+      setMessages([...newMessages, { role: "assistant", content: errorMsg }]);
     } finally {
       setIsTyping(false);
     }

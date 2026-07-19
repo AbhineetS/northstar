@@ -1,5 +1,14 @@
 # Northstar Architecture
 
+## FIFA Smart Stadium Challenge Alignment
+Northstar is structurally engineered to address the specific requirements of the FIFA World Cup 2026 Smart Stadium problem statement:
+- **Fan Safety & Crowd Management**: Handled via `useTelemetryStore` tracking live crowd density and routing.
+- **Stadium Operations & Tournament Management**: Handled via the Organizer and Staff Copilots (`GeminiAIService.ts`).
+- **Volunteer Coordination & Staff Productivity**: Handled via dedicated role views (VolunteerCopilot, StaffCopilot) maximizing operational efficiency.
+- **AI-Assisted Decision Making & Real-time Operational Intelligence**: Core logic powered by Gemini 1.5 Flash in Next.js edge API routes.
+- **Emergency Response & Smart Navigation**: Dynamic pathfinding in `LiveMapService.ts` reacts to live incidents.
+- **Sustainability & Accessibility**: System tracks energy use via telemetry and enforces WCAG 2.1 AA across all UI components.
+
 ## Ecosystem
 Northstar separates the presentation layer (Next.js) from the logic and AI orchestration layer (FastAPI). The system provides tailored interfaces for four primary user roles, all powered by a centralized real-time telemetry engine:
 

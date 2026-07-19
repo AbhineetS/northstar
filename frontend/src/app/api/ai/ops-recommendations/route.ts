@@ -7,6 +7,14 @@ const OpsRequestSchema = z.object({
   context: z.record(z.string(), z.any()).optional()
 });
 
+/**
+ * POST handler for the /api/ai/ops-recommendations endpoint.
+ * Analyzes live telemetry context via Gemini and returns structured operational
+ * recommendations in a JSON array format. Enforces rate limits and schema validation.
+ * 
+ * @param req - The Next.js request object
+ * @returns A JSON response containing actionable operational insights or an error
+ */
 export async function POST(req: NextRequest) {
   // Rate limit: 10 requests per minute
   const rl = rateLimit(req, { limit: 10, windowMs: 60000 });

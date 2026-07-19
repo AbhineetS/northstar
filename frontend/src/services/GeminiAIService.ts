@@ -28,6 +28,11 @@ export class GeminiAIService implements IAIService {
     }
   }
 
+  /**
+   * Generates operations-focused recommendations for stadium management.
+   * @param context - Contextual state such as weather, matches, and incidents
+   * @returns A promise resolving to the parsed recommendations object
+   */
   async generateOpsRecommendations(context: unknown): Promise<IOpsRecommendation[]> {
     useApiStore.getState().startRequest();
     try {
@@ -50,6 +55,12 @@ export class GeminiAIService implements IAIService {
     }
   }
 
+  /**
+   * Generates a conversational AI response based on the provided context.
+   * @param messages - The chat history array
+   * @param context - Additional contextual parameters (e.g., role, stage, weather)
+   * @returns A promise resolving to the AI-generated string response
+   */
   async chat(messages: IAIChatMessage[], context?: unknown): Promise<string> {
     useApiStore.getState().startRequest();
     try {

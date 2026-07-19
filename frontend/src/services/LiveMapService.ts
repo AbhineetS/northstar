@@ -4,6 +4,13 @@ import { useApiStore } from "../store/useApiStore";
 export class LiveMapService implements IMapService {
   private apiKey = process.env.NEXT_PUBLIC_GOOGLE_MAPS_API_KEY;
 
+  /**
+   * Retrieves an optimized route between two locations using the Google Maps Directions API.
+   * Calculates the best path based on real-time conditions.
+   * @param origin - The starting coordinate array [lat, lng]
+   * @param destination - The destination coordinate array [lat, lng]
+   * @returns A promise resolving to an IRouteOptimization object
+   */
   async getOptimizedRoute(origin: [number, number], destination: [number, number]): Promise<IRouteOptimization> {
     if (!this.apiKey) {
       throw new Error("Google Maps API key missing. Routing unavailable.");

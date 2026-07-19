@@ -35,8 +35,8 @@ export const OpsSidebar = ({ currentPhase, pathname, navItems }: OpsSidebarProps
           </div>
           <h1 className="font-display font-bold text-lg tracking-tight text-text-main">NORTHSTAR</h1>
         </div>
-        <Badge variant={currentPhase.includes("EMERGENCY") ? "danger" : "success"} isLive className="text-xs">
-          Ops Status: {currentPhase.includes("EMERGENCY") ? "CRITICAL" : "Nominal"}
+        <Badge variant={currentPhase?.includes("EMERGENCY") ? "danger" : "success"} isLive className="text-xs">
+          Ops Status: {currentPhase?.includes("EMERGENCY") ? "CRITICAL" : "Nominal"}
         </Badge>
       </div>
 

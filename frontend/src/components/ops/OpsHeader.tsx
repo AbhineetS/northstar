@@ -31,14 +31,14 @@ export const OpsHeader = ({ currentPhase, weatherState }: OpsHeaderProps) => {
     >
       <div className="flex items-center space-x-6">
         <div className="flex items-center space-x-2 text-sm text-text-secondary font-semibold">
-          <span className={cn("w-2 h-2 rounded-full animate-pulse", currentPhase.includes("EMERGENCY") ? "bg-fifa-red" : "bg-success")} />
-          <span className={currentPhase.includes("EMERGENCY") ? "text-fifa-red" : ""}>
-            {currentPhase.includes("EMERGENCY") ? "DEFCON 2" : "DEFCON 5"}
+          <span className={cn("w-2 h-2 rounded-full animate-pulse", currentPhase?.includes("EMERGENCY") ? "bg-danger" : "bg-success")} />
+          <span className={currentPhase?.includes("EMERGENCY") ? "text-danger" : "text-success"}>
+            {currentPhase?.includes("EMERGENCY") ? "DEFCON 2" : "DEFCON 5"}
           </span>
         </div>
         <div className="flex items-center space-x-2 text-sm text-text-secondary font-semibold">
           <ShieldCheck className="w-4 h-4 text-text-muted" />
-          <span>{currentPhase.includes("EMERGENCY") ? "Sector B Lockdown" : "All Gates Secure"}</span>
+          <span>{currentPhase?.includes("EMERGENCY") ? "Sector B Lockdown" : "All Gates Secure"}</span>
         </div>
         <div className="h-4 w-px bg-border-strong" />
         <DataBoundary 
