@@ -17,7 +17,7 @@ export default function StaffDashboard() {
   const [activeTab, setActiveTab] = React.useState<"home" | "tasks" | "copilot" | "map" | "performance">("home");
 
   return (
-    <div className="h-screen w-full bg-[#f0f0f0] text-primary relative overflow-hidden font-sans flex justify-center items-center">
+    <div className="h-[100dvh] w-full bg-[#f0f0f0] text-primary relative overflow-hidden font-sans flex justify-center items-center">
       <NotificationToaster profile="Staff" />
       
       {/* Abstract background elements */}
@@ -79,7 +79,7 @@ export default function StaffDashboard() {
         </main>
 
         {/* Bottom Navigation - Floating island style */}
-        <div className="absolute bottom-6 left-6 right-6 z-40 pb-safe">
+        <div className="absolute bottom-8 left-6 right-6 z-40 pb-safe">
           <nav className="bg-surface/80 backdrop-blur-3xl border border-white/40 shadow-premium rounded-[2rem] p-2 flex items-center justify-between">
             <NavButton icon={<Home />} label="Home" isActive={activeTab === "home"} onClick={() => setActiveTab("home")} />
             <NavButton icon={<Wrench />} label="Tasks" isActive={activeTab === "tasks"} onClick={() => setActiveTab("tasks")} />

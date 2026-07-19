@@ -13,7 +13,7 @@ export const StaffHome = () => {
   const [shiftEnd] = React.useState(() => new Date(Date.now() + 1000 * 60 * 60 * 4.5)); // 4.5 hours from now
 
   return (
-    <div className="space-y-4 pb-24 overflow-y-auto h-full px-4 pt-6 no-scrollbar relative">
+    <div className="space-y-4 pb-32 overflow-y-auto h-full px-4 pt-6 no-scrollbar relative">
       {/* Premium Shift Header */}
       <div className="flex justify-between items-center mb-6">
         <div>

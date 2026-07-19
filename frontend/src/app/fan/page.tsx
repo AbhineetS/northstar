@@ -72,7 +72,7 @@ export default function FanHome() {
 
   return (
     <PageTransition>
-      <div className="relative h-screen w-full bg-surface pb-24 overflow-y-auto no-scrollbar pt-20 px-8">
+      <div className="relative h-[100dvh] w-full bg-surface pb-24 overflow-y-auto no-scrollbar pt-28 px-8">
         
         <div className="max-w-7xl mx-auto mb-12 flex justify-between items-end px-4 md:px-0">
           <motion.div 
@@ -102,7 +102,7 @@ export default function FanHome() {
           initial="hidden"
           animate="show"
         >
-          <BentoGrid className="auto-rows-[320px] gap-6">
+          <BentoGrid className="auto-rows-min gap-6">
             
             {/* Top Left: Match Countdown or Live Match (conditionally rendered) */}
             <motion.div variants={{ hidden: { opacity: 0, y: 20 }, show: { opacity: 1, y: 0, transition: { type: "spring", stiffness: 300, damping: 24 } } }} className="md:col-span-2 md:row-span-1">
@@ -120,8 +120,8 @@ export default function FanHome() {
             </motion.div>
 
             {/* Top Right: AI Assistant */}
-            <motion.div variants={{ hidden: { opacity: 0, y: 20 }, show: { opacity: 1, y: 0, transition: { type: "spring", stiffness: 300, damping: 24 } } }} className="md:col-span-1 md:row-span-2">
-              <BentoGridItem className="p-0 h-full bg-[#F3E5F5] border-none shadow-sm">
+            <motion.div variants={{ hidden: { opacity: 0, y: 20 }, show: { opacity: 1, y: 0, transition: { type: "spring", stiffness: 300, damping: 24 } } }} className="md:col-span-1 md:row-span-1">
+              <BentoGridItem className="p-0 h-full bg-[#F3E5F5] border-none shadow-sm min-h-[320px]">
                 <MatchdayAssistantWidget recommendation={aiRecommendation} />
               </BentoGridItem>
             </motion.div>
@@ -134,8 +134,8 @@ export default function FanHome() {
             </motion.div>
 
             {/* Middle Center: Interactive Map */}
-            <motion.div variants={{ hidden: { opacity: 0, y: 20 }, show: { opacity: 1, y: 0, transition: { type: "spring", stiffness: 300, damping: 24 } } }} className="md:col-span-1 md:row-span-2">
-              <BentoGridItem className="p-0 h-full bg-[#E3F2FD] border-none shadow-sm">
+            <motion.div variants={{ hidden: { opacity: 0, y: 20 }, show: { opacity: 1, y: 0, transition: { type: "spring", stiffness: 300, damping: 24 } } }} className="md:col-span-1 md:row-span-1">
+              <BentoGridItem className="p-0 h-full bg-[#E3F2FD] border-none shadow-sm min-h-[320px]">
                 <DataBoundary state={{ ...matchState, retry: fetchMatchDetails }}>
                   {(match) => <StadiumMapWidget gate={match.gate} section={match.section} seat={match.seat} />}
                 </DataBoundary>

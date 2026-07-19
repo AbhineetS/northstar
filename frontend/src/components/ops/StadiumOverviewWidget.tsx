@@ -4,6 +4,8 @@ import React, { useEffect, useState } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
 import { MapIcon, AlertTriangle, Users } from 'lucide-react';
 import { PremiumCard } from '@/components/ui/PremiumCard';
+import { MapContainer } from '@/components/map/MapContainer';
+import { HeatmapLayer } from '@/components/map/HeatmapLayer';
 
 interface Hotspot {
   id: string;
@@ -79,71 +81,29 @@ export function StadiumOverviewWidget() {
         </div>
       </div>
 
-      {/* Abstract Stadium Map */}
+      {/* Real Mapbox Stadium Map */}
       <div className="absolute inset-0 z-0 bg-[#0a0a0a] flex items-center justify-center overflow-hidden">
-        {/* Scanning grid */}
-        <div className="absolute inset-0 opacity-[0.15]" 
-             style={{ backgroundImage: 'linear-gradient(#fff 1px, transparent 1px), linear-gradient(90deg, #fff 1px, transparent 1px)', backgroundSize: '40px 40px' }} />
-        
-        {/* Radar sweep */}
-        <motion.div 
-          className="absolute w-[200%] h-[200%] origin-center pointer-events-none"
-          animate={{ rotate: 360 }}
-          transition={{ duration: 10, repeat: Infinity, ease: "linear" }}
-          style={{ background: 'conic-gradient(from 0deg, transparent 0deg, transparent 270deg, rgba(var(--primary-rgb), 0.1) 360deg)' }}
-        />
-
-        {/* Stadium outline */}
-        <div className="relative w-[80%] h-[70%] border border-border-strong rounded-[100px] flex items-center justify-center">
-          <div className="w-[90%] h-[85%] border border-border-subtle/50 rounded-[80px] flex items-center justify-center">
-             {/* Pitch */}
-             <div className="w-[40%] h-[60%] border-2 border-success/30 rounded-lg flex items-center justify-center relative">
-                <div className="w-full h-[1px] bg-success/30 absolute top-1/2" />
-                <div className="w-8 h-8 rounded-full border-2 border-success/30 absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2" />
-             </div>
-          </div>
-        </div>
-
-        {/* Hotspots */}
-        {hotspots.map((spot) => (
-          <motion.div
-            key={spot.id}
-            className="absolute z-10 cursor-pointer"
-            style={{ left: `${spot.x}%`, top: `${spot.y}%` }}
-            initial={{ scale: 0, opacity: 0 }}
-            animate={{ scale: 1, opacity: 1 }}
-            onHoverStart={() => setActiveZone(spot.id)}
-            onHoverEnd={() => setActiveZone(null)}
-          >
-            {/* Pulsing ring */}
-            <motion.div 
-              className="absolute -inset-4 rounded-full"
-              style={{ backgroundColor: getIntensityColor(spot.intensity) }}
-              animate={{ scale: [1, 2], opacity: [0.4, 0] }}
-              transition={{ duration: spot.intensity === 'critical' ? 1 : 2, repeat: Infinity }}
-            />
-            {/* Core dot */}
-            <div className="relative w-4 h-4 rounded-full border-2 border-[#0a0a0a] shadow-[0_0_15px_rgba(0,0,0,0.5)]"
-                 style={{ backgroundColor: getIntensityColor(spot.intensity) }} />
-
-            {/* Label Tooltip */}
-            <AnimatePresence>
-              {activeZone === spot.id && (
-                <motion.div 
-                  initial={{ opacity: 0, y: 10 }}
-                  animate={{ opacity: 1, y: 0 }}
-                  exit={{ opacity: 0, y: 10 }}
-                  className="absolute top-6 left-1/2 -translate-x-1/2 bg-surface border border-border-subtle px-3 py-2 rounded-xl shadow-premium whitespace-nowrap z-30"
-                >
-                  <p className="text-xs font-bold text-text-main">{spot.label}</p>
-                  <p className="text-[10px] text-text-muted uppercase tracking-wider mt-0.5 flex items-center gap-1">
-                    <Users className="w-3 h-3" /> Density: {spot.intensity}
-                  </p>
-                </motion.div>
-              )}
-            </AnimatePresence>
-          </motion.div>
-        ))}
+        <MapContainer 
+          className="w-full h-full opacity-80"
+          initialViewState={{
+            latitude: 40.7128,
+            longitude: -74.006,
+            zoom: 16.5,
+            pitch: 60,
+            bearing: -17.6
+          }}
+        >
+          <HeatmapLayer 
+            data={hotspots.map(spot => ({
+              lat: 40.7128 + (spot.y - 50) * 0.00005,
+              lng: -74.006 + (spot.x - 50) * 0.00005,
+              weight: spot.intensity === 'critical' ? 1.0 : spot.intensity === 'high' ? 0.8 : spot.intensity === 'medium' ? 0.5 : 0.2
+            }))} 
+            radius={50} 
+            opacity={0.7} 
+          />
+        </MapContainer>
+        <div className="absolute inset-0 pointer-events-none bg-gradient-to-t from-background via-transparent to-background/50" />
       </div>
       
       {/* Footer Info Overlay */}

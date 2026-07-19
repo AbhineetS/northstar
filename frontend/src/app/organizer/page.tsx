@@ -64,7 +64,7 @@ export default function OrganizerDashboard() {
           <OrganizerHeader />
 
           {/* Massive Bento Grid for Organizer */}
-          <BentoGrid className="auto-rows-[250px] gap-6">
+          <BentoGrid className="auto-rows-[minmax(250px,auto)] gap-6">
             
             {/* Primary KPI - Total Attendance */}
             <BentoGridItem colSpan={2} rowSpan={1} className="p-0 border-none bg-transparent shadow-none">
