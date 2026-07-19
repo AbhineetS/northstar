@@ -4,6 +4,8 @@ import { describe, it, expect, vi } from 'vitest';
 import { VolunteerHome } from '../VolunteerHome';
 import { useTelemetryStore } from '@/store/useTelemetryStore';
 
+import { Incident } from '@/store/useTelemetryStore';
+
 vi.mock('framer-motion', () => ({
   motion: {
     div: ({ children, ...props }: { children?: React.ReactNode } & Record<string, unknown>) => <div {...props}>{children}</div>,
@@ -33,10 +35,8 @@ describe('VolunteerHome', () => {
           description: 'Minor injury',
           status: 'Active',
           timeActiveMinutes: 5,
-          lat: 0,
-          lng: 0,
-          severity: 'medium'
-        }
+          priority: 'medium'
+        } as unknown as Incident
       ] 
     });
     

@@ -4,6 +4,8 @@ import { describe, it, expect, vi } from 'vitest';
 import { VolunteerMap } from '../VolunteerMap';
 import { useTelemetryStore } from '@/store/useTelemetryStore';
 
+import { Incident } from '@/store/useTelemetryStore';
+
 // Mock map components
 vi.mock('@/components/map/MapContainer', () => ({
   MapContainer: ({ children }: { children?: React.ReactNode }) => <div data-testid="map-container">{children}</div>
@@ -35,10 +37,8 @@ describe('VolunteerMap', () => {
           description: 'Minor injury',
           status: 'Active',
           timeActiveMinutes: 5,
-          lat: 40.7135,
-          lng: -74.0068,
-          severity: 'medium'
-        }
+          priority: 'medium'
+        } as unknown as Incident
       ] 
     });
     

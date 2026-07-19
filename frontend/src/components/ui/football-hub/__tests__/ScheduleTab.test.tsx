@@ -1,6 +1,6 @@
 import React from 'react';
 import { render, screen } from '@testing-library/react';
-import { describe, it, expect } from 'vitest';
+import { describe, it, expect, vi } from 'vitest';
 import { ScheduleTab } from '../ScheduleTab';
 import { IScheduleItem } from '@/services/interfaces';
 
@@ -8,6 +8,7 @@ describe('ScheduleTab', () => {
   const mockScheduleBase = {
     isLoading: false,
     error: null,
+    retry: vi.fn(),
     isEmpty: false,
   };
 

@@ -12,6 +12,7 @@ describe('TeamsTab', () => {
   const mockTeamsBase = {
     isLoading: false,
     error: null,
+    retry: vi.fn(),
     isEmpty: false,
   };
 
@@ -25,18 +26,20 @@ describe('TeamsTab', () => {
       {
         id: 'team1',
         name: 'Argentina',
-        group: 'Group A',
+        code: 'ARG',
         coach: 'Scaloni',
         formation: '4-3-3',
-        logo: '🇦🇷'
+        logo: '🇦🇷',
+        recentForm: ['W']
       },
       {
         id: 'team2',
         name: 'Brazil',
-        group: 'Group A',
+        code: 'BRA',
         coach: 'Dorival',
         formation: '4-2-3-1',
-        logo: '🇧🇷'
+        logo: '🇧🇷',
+        recentForm: ['W']
       }
     ];
 

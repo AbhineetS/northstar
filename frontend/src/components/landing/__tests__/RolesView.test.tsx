@@ -14,7 +14,7 @@ vi.mock('framer-motion', () => ({
 }));
 
 vi.mock('@/components/ui/AnimatedNumber', () => ({
-  AnimatedNumber: ({ value }: unknown) => <span>{value}</span>
+  AnimatedNumber: ({ value }: { value: number }) => <span>{value}</span>
 }));
 
 describe('RolesView', () => {
@@ -26,7 +26,9 @@ describe('RolesView', () => {
       metric: 100,
       metricLabel: 'fans',
       icon: () => <svg data-testid="fan-icon" />,
-      color: 'bg-red-500'
+      color: 'bg-red-500',
+      href: '/fan',
+      loadingSteps: ['Loading fans']
     },
     {
       id: 'staff',
@@ -35,7 +37,9 @@ describe('RolesView', () => {
       metric: 2500000,
       metricLabel: 'staff',
       icon: () => <svg data-testid="staff-icon" />,
-      color: 'bg-blue-500'
+      color: 'bg-blue-500',
+      href: '/staff',
+      loadingSteps: ['Loading staff']
     }
   ];
 

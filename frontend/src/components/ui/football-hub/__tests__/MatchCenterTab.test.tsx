@@ -1,6 +1,6 @@
 import React from 'react';
 import { render, screen } from '@testing-library/react';
-import { describe, it, expect } from 'vitest';
+import { describe, it, expect, vi } from 'vitest';
 import { MatchCenterTab } from '../MatchCenterTab';
 import { ILiveMatchStats } from '@/services/interfaces';
 
@@ -8,6 +8,7 @@ describe('MatchCenterTab', () => {
   const mockLiveMatchBase = {
     isLoading: false,
     error: null,
+    retry: vi.fn(),
     isEmpty: false,
   };
 

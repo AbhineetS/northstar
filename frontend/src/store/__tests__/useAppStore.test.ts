@@ -1,6 +1,7 @@
 import { describe, it, expect, vi, beforeEach } from 'vitest';
 import { useAppStore } from '../useAppStore';
 import { weatherService, matchService, mapService } from '../../services';
+import { IWeatherCondition, ILiveMatchStats, IMatchDetails, IRouteOptimization } from '../../services/interfaces';
 
 // Mock the services
 vi.mock('../../services', () => ({
@@ -30,7 +31,7 @@ describe('useAppStore', () => {
   });
 
   it('sets location and fetches weather', async () => {
-    vi.mocked(weatherService.getCurrentWeather).mockResolvedValueOnce({ condition: 'clear' });
+    vi.mocked(weatherService.getCurrentWeather).mockResolvedValueOnce({ condition: 'clear' } as unknown as IWeatherCondition);
     
     useAppStore.getState().setLocation(51.5, -0.1);
     
@@ -41,7 +42,7 @@ describe('useAppStore', () => {
   describe('fetchWeather', () => {
     it('handles success', async () => {
       const mockWeather = { condition: 'rain' };
-      vi.mocked(weatherService.getCurrentWeather).mockResolvedValueOnce(mockWeather);
+      vi.mocked(weatherService.getCurrentWeather).mockResolvedValueOnce(mockWeather as unknown as IWeatherCondition);
       
       await useAppStore.getState().fetchWeather();
       
@@ -68,7 +69,7 @@ describe('useAppStore', () => {
   describe('fetchMatch', () => {
     it('handles success', async () => {
       const mockMatch = { status: 'Live' };
-      vi.mocked(matchService.getLiveMatch).mockResolvedValueOnce(mockMatch);
+      vi.mocked(matchService.getLiveMatch).mockResolvedValueOnce(mockMatch as unknown as ILiveMatchStats);
       
       await useAppStore.getState().fetchMatch();
       
@@ -81,7 +82,7 @@ describe('useAppStore', () => {
   describe('fetchMatchDetails', () => {
     it('handles success', async () => {
       const mockDetails = { homeTeam: 'Team A' };
-      vi.mocked(matchService.getMatchDetails).mockResolvedValueOnce(mockDetails);
+      vi.mocked(matchService.getMatchDetails).mockResolvedValueOnce(mockDetails as unknown as IMatchDetails);
       
       await useAppStore.getState().fetchMatchDetails();
       
@@ -94,7 +95,7 @@ describe('useAppStore', () => {
   describe('fetchRoute', () => {
     it('handles success with parsed coordinates', async () => {
       const mockRoute = { estimatedMinutes: 20 };
-      vi.mocked(mapService.getOptimizedRoute).mockResolvedValueOnce(mockRoute);
+      vi.mocked(mapService.getOptimizedRoute).mockResolvedValueOnce(mockRoute as unknown as IRouteOptimization);
       
       await useAppStore.getState().fetchRoute('51.5,-0.1', '51.6,-0.2');
       
