@@ -22,6 +22,12 @@ export default function RootLayout({
   return (
     <html lang="en" className={`h-full antialiased ${plusJakartaSans.variable}`}>
       <body className="min-h-full flex flex-col font-sans relative text-neutral-900 bg-white overflow-hidden selection:bg-primary/20 selection:text-primary">
+        <a 
+          href="#main-content" 
+          className="sr-only focus:not-sr-only focus:absolute focus:top-4 focus:left-4 focus:z-[100] focus:px-4 focus:py-2 focus:bg-primary focus:text-white focus:rounded-md focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-primary"
+        >
+          Skip to main content
+        </a>
         <OfflineDetector />
         
         {/* Subtle dynamic breathing background for light mode */}

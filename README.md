@@ -14,30 +14,32 @@ Large sporting events require continuous coordination between thousands of peopl
 
 ## Features
 
-### Fan Experience
+### Fan Experience & Accessibility
 
 - AI Matchday Assistant
 - Live Match Information
-- Stadium Navigation
+- Smart Stadium Navigation (incl. Wheelchair & Low-sensory Routes)
 - Interactive Maps
 - Weather Intelligence
-- Personalized Recommendations
+- Personalized Recommendations & Fan Safety
 
-### Operations Dashboard
+### Operations & Real-time Intelligence
 
-- Digital Twin
-- Crowd Monitoring
-- Incident Management
-- Predictive Analytics
+- Digital Twin & Stadium Operations
+- Crowd Management & Monitoring
+- AI-Assisted Decision Making
+- Predictive Analytics (Queue times, Incident Probabilities)
 - Live Weather Monitoring
-- Operational Intelligence
+- Real-time Operational Intelligence
+- Sustainability Dashboard (Energy, Water, Waste)
+- Tournament Management (Cross-venue visibility)
 
-### Staff & Volunteer Portal
+### Staff & Volunteer Coordination
 
+- Volunteer Coordination & Dispatch
 - Smart Task Assignment
-- AI Copilot
-- Navigation Assistance
-- Emergency Support
+- Staff Productivity & AI Copilot
+- Emergency Response & Support
 - Performance Tracking
 
 ---
@@ -137,7 +139,9 @@ uvicorn main:app --reload
 
 ## Vision
 
-Northstar demonstrates how Generative AI and real-time intelligence can improve crowd management, stadium operations, navigation, safety, and fan engagement during large-scale international sporting events.
+Northstar demonstrates how Generative AI and real-time intelligence can revolutionize **Stadium Operations** and **Tournament Management**. By providing tools tailored for Organizers, Staff, Volunteers, and Fans, Northstar improves **Crowd Management**, **Fan Safety**, **Staff Productivity**, and **Emergency Response**.
+
+With integrated **Sustainability** tracking, **Predictive Analytics**, and **Smart Navigation** emphasizing **Accessibility**, Northstar acts as the definitive digital brain for the FIFA World Cup 2026.
 
 ---
 

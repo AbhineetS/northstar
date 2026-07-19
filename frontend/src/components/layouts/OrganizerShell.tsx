@@ -22,7 +22,7 @@ export const OrganizerShell = ({ children, activeRoute = "overview" }: Organizer
           <Badge variant="ai" className="ml-auto">CMD</Badge>
         </div>
         
-        <nav className="flex-1 space-y-2 p-4">
+        <nav aria-label="Main Navigation" className="flex-1 space-y-2 p-4">
           <SidebarItem icon={<Activity />} label="Global Overview" isActive={activeRoute === "overview"} />
           <SidebarItem icon={<Users />} label="Crowd Intel" isActive={activeRoute === "crowd"} />
           <SidebarItem icon={<ShieldAlert />} label="Security" isActive={activeRoute === "security"} alertCount={2} />
@@ -54,7 +54,7 @@ export const OrganizerShell = ({ children, activeRoute = "overview" }: Organizer
           </div>
         </header>
 
-        <main className="flex-1 overflow-y-auto p-6 bg-[radial-gradient(ellipse_at_top_right,_var(--tw-gradient-stops))] from-surface-elevated/20 via-background to-background">
+        <main id="main-content" className="flex-1 overflow-y-auto p-6 bg-[radial-gradient(ellipse_at_top_right,_var(--tw-gradient-stops))] from-surface-elevated/20 via-background to-background">
           {children}
         </main>
       </div>

@@ -18,14 +18,14 @@ export const Button = ({
   children,
   ...props
 }: ButtonProps) => {
-  const baseStyles = "inline-flex items-center justify-center font-bold rounded-full transition-all duration-700 ease-apple focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-offset-background disabled:opacity-50 disabled:pointer-events-none tracking-tight";
+  const baseStyles = "inline-flex items-center justify-center font-bold rounded-full transition-all duration-700 ease-apple focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-offset-2 focus-visible:ring-offset-background disabled:opacity-50 disabled:pointer-events-none tracking-tight";
   
   const variants = {
-    primary: "bg-primary text-white hover:bg-neutral-800 focus:ring-primary shadow-premium hover:shadow-premium-hover hover:-translate-y-0.5",
-    secondary: "bg-[#F4F4F6] text-text-main hover:bg-[#E5E5EA] focus:ring-neutral-200",
+    primary: "bg-primary text-white hover:bg-neutral-800 focus-visible:ring-primary shadow-premium hover:shadow-premium-hover hover:-translate-y-0.5",
+    secondary: "bg-[#F4F4F6] text-text-main hover:bg-[#E5E5EA] focus-visible:ring-neutral-200",
     ghost: "bg-transparent text-text-secondary hover:text-text-main hover:bg-neutral-100",
-    danger: "bg-fifa-red text-white hover:bg-fifa-red/90 focus:ring-fifa-red shadow-premium hover:shadow-premium-hover",
-    ai: "bg-gradient-to-r from-fifa-blue to-fifa-green text-white hover:opacity-90 focus:ring-fifa-blue shadow-premium hover:shadow-premium-hover",
+    danger: "bg-fifa-red text-white hover:bg-fifa-red/90 focus-visible:ring-fifa-red shadow-premium hover:shadow-premium-hover",
+    ai: "bg-gradient-to-r from-fifa-blue to-fifa-green text-white hover:opacity-90 focus-visible:ring-fifa-blue shadow-premium hover:shadow-premium-hover",
     outline: "bg-transparent border border-border-strong text-text-main hover:bg-[#F4F4F6] hover:border-transparent",
   };
 

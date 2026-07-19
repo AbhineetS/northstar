@@ -5,25 +5,13 @@ import { motion, AnimatePresence } from "framer-motion";
 import { ClipboardList, MapPin, Sparkles, Clock, CheckCircle2 } from "lucide-react";
 import { Badge } from "@/components/ui/Badge";
 
-interface VolunteerTask {
-  id: string;
-  title: string;
-  location: string;
-  priority: 'Critical' | 'High' | 'Routine';
-  status: 'Pending' | 'In Progress' | 'Completed';
-  timeAssigned: string;
-  aiSuggested?: boolean;
-}
-
-const MOCK_TASKS: VolunteerTask[] = [
-  { id: 't1', title: 'Assist Fan Wheelchair Navigation', location: 'Gate A - Section 102', priority: 'High', status: 'Pending', timeAssigned: '2m ago', aiSuggested: true },
-  { id: 't2', title: 'Spill Cleanup Assistance', location: 'Concourse East - Food Court', priority: 'Routine', status: 'Pending', timeAssigned: '15m ago' },
-  { id: 't3', title: 'Crowd Control Support', location: 'Gate C Security Checkpoint', priority: 'Critical', status: 'In Progress', timeAssigned: '5m ago' },
-  { id: 't4', title: 'Lost Child Protocol', location: 'Section 204', priority: 'Critical', status: 'Completed', timeAssigned: '45m ago' },
-];
+import { useTelemetryStore } from "@/store/useTelemetryStore";
 
 export const VolunteerTasks = () => {
-  const [tasks, setTasks] = React.useState<VolunteerTask[]>(MOCK_TASKS);
+  const allTasks = useTelemetryStore(state => state.staffTasks);
+  const tasks = allTasks.filter(t => t.assigneeRole === "Volunteer");
+  const completeTaskStore = useTelemetryStore(state => state.completeStaffTask);
+  const acceptTaskStore = useTelemetryStore(state => state.acceptStaffTask);
   
   // Reorder tasks: Critical -> High -> Routine, and then by AI suggestion
   const sortedTasks = React.useMemo(() => {
@@ -43,7 +31,11 @@ export const VolunteerTasks = () => {
   const completedTasks = sortedTasks.filter(t => t.status === 'Completed');
 
   const completeTask = (id: string) => {
-    setTasks(prev => prev.map(t => t.id === id ? { ...t, status: 'Completed' } : t));
+    if (completeTaskStore) completeTaskStore(id);
+  };
+
+  const acceptTask = (id: string) => {
+    if (acceptTaskStore) acceptTaskStore(id);
   };
 
   return (
@@ -126,7 +118,7 @@ export const VolunteerTasks = () => {
 
               <div className="flex gap-2 mt-auto">
                 {task.status === 'Pending' ? (
-                  <button onClick={() => setTasks(prev => prev.map(t => t.id === task.id ? { ...t, status: 'In Progress' } : t))} className="flex-1 py-2 bg-primary text-white font-bold text-xs rounded-xl hover:shadow-md transition-shadow">
+                  <button onClick={() => acceptTask(task.id)} className="flex-1 py-2 bg-primary text-white font-bold text-xs rounded-xl hover:shadow-md transition-shadow">
                     Accept Task
                   </button>
                 ) : (

@@ -11,11 +11,12 @@ import { useDemoStore } from "@/store/useDemoStore";
 import { AnimatedNumber } from "@/components/ui/AnimatedNumber";
 
 export default function SustainabilityPage() {
-  const { weather, totalAttendance } = useTelemetryStore();
+  const { weather, sustainability } = useTelemetryStore();
   useDemoStore();
   
-  const powerConsumption = (40 + (totalAttendance / 85000) * 10).toFixed(1);
-  const waterUsage = Math.floor(1000 + (totalAttendance / 85000) * 500);
+  const powerConsumption = sustainability.powerConsumptionMw;
+  const waterUsage = sustainability.waterUsageLpm;
+  const wasteDiversion = sustainability.wasteDiversionPercent;
 
   return (
     <PageTransition>
@@ -57,7 +58,7 @@ export default function SustainabilityPage() {
                 <span className="text-2xl text-text-muted font-medium">MW</span>
               </div>
               <div className="text-sm font-medium text-success bg-success/10 px-3 py-1.5 rounded-full w-fit">
-                -12% vs expected baseline
+                {sustainability.baselineDiffPower > 0 ? `+${sustainability.baselineDiffPower}% above baseline` : `${sustainability.baselineDiffPower}% vs expected baseline`}
               </div>
             </div>
           </BentoGridItem>
@@ -81,7 +82,7 @@ export default function SustainabilityPage() {
                 <span className="text-2xl text-text-muted font-medium">L/m</span>
               </div>
               <div className="text-sm font-medium text-warning bg-warning/10 px-3 py-1.5 rounded-full w-fit">
-                +4% above baseline
+                {sustainability.baselineDiffWater > 0 ? `+${sustainability.baselineDiffWater}% above baseline` : `${sustainability.baselineDiffWater}% vs expected baseline`}
               </div>
             </div>
           </BentoGridItem>
@@ -100,7 +101,7 @@ export default function SustainabilityPage() {
             <div className="relative z-10">
               <div className="flex items-baseline gap-2 mb-2">
                 <div className="text-7xl font-display font-bold text-success tracking-tighter">
-                  82
+                  <AnimatedNumber value={wasteDiversion} />
                 </div>
                 <span className="text-2xl text-success/60 font-medium">%</span>
               </div>

@@ -23,5 +23,6 @@ if settings.BACKEND_CORS_ORIGINS:
 app.include_router(api_router, prefix=settings.API_V1_STR)
 
 @app.get("/health")
-def health_check():
+def health_check() -> dict[str, str]:
+    """Health check endpoint."""
     return {"status": "ok", "message": "Pulse OS Backend is running"}

@@ -67,6 +67,8 @@ export const NotificationToaster = ({ profile }: NotificationToasterProps) => {
               animate={{ opacity: 1, y: 0, scale: 1 }}
               exit={{ opacity: 0, y: -20, scale: 0.95, transition: { duration: 0.2 } }}
               className={`w-full ${bgColor} border ${borderColor} shadow-lg rounded-2xl p-4 pointer-events-auto backdrop-blur-md flex items-start space-x-3`}
+              role={notif.type === 'emergency' || notif.type === 'warning' ? 'alert' : 'status'}
+              aria-live={notif.type === 'emergency' || notif.type === 'warning' ? 'assertive' : 'polite'}
             >
               <div className={`mt-0.5 ${iconColor}`}>
                 <Icon className="w-5 h-5" />

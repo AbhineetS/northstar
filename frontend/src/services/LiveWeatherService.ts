@@ -2,26 +2,17 @@ import { IWeatherCondition, IWeatherService } from "./interfaces";
 import { useApiStore } from "../store/useApiStore";
 
 export class LiveWeatherService implements IWeatherService {
-  private apiKey = process.env.NEXT_PUBLIC_WEATHER_API_KEY;
 
   async getCurrentWeather(lat: number, lon: number): Promise<IWeatherCondition> {
-    if (!this.apiKey) {
-      throw new Error("Weather API key missing. Weather unavailable.");
-    }
-
     useApiStore.getState().startRequest();
     try {
-      const [weatherRes, forecastRes] = await Promise.all([
-        fetch(`https://api.openweathermap.org/data/2.5/weather?lat=${lat}&lon=${lon}&appid=${this.apiKey}&units=metric`),
-        fetch(`https://api.openweathermap.org/data/2.5/forecast?lat=${lat}&lon=${lon}&appid=${this.apiKey}&units=metric`)
-      ]);
+      const response = await fetch(`/api/weather?lat=${lat}&lon=${lon}`);
       
-      if (!weatherRes.ok || !forecastRes.ok) {
+      if (!response.ok) {
         throw new Error(`Weather API error`);
       }
 
-      const weatherData = await weatherRes.json();
-      const forecastData = await forecastRes.json();
+      const { weatherData, forecastData } = await response.json();
       useApiStore.getState().endRequest();
 
       const pop = forecastData.list && forecastData.list.length > 0 ? forecastData.list[0].pop : 0;

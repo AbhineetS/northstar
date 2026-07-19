@@ -15,6 +15,26 @@ interface DialogProps {
 }
 
 export const Dialog = ({ isOpen, onClose, title, children, className }: DialogProps) => {
+  const dialogRef = React.useRef<HTMLDivElement>(null);
+  const titleId = React.useId();
+
+  React.useEffect(() => {
+    const handleKeyDown = (e: KeyboardEvent) => {
+      if (e.key === "Escape" && isOpen) {
+        onClose();
+      }
+    };
+    if (isOpen) {
+      document.addEventListener("keydown", handleKeyDown);
+      // Basic focus management: focus the dialog container so screen readers announce it
+      // and keyboard navigation starts from inside.
+      setTimeout(() => dialogRef.current?.focus(), 50);
+    }
+    return () => {
+      document.removeEventListener("keydown", handleKeyDown);
+    };
+  }, [isOpen, onClose]);
+
   return (
     <AnimatePresence>
       {isOpen && (
@@ -36,14 +56,19 @@ export const Dialog = ({ isOpen, onClose, title, children, className }: DialogPr
               initial="hidden"
               animate="visible"
               exit="exit"
+              role="dialog"
+              aria-modal="true"
+              aria-labelledby={title ? titleId : undefined}
+              tabIndex={-1}
+              ref={dialogRef}
               className={cn(
-                "relative w-full max-w-lg overflow-hidden rounded-xl border border-border-strong bg-surface-elevated p-6 shadow-elevation pointer-events-auto",
+                "relative w-full max-w-lg overflow-hidden rounded-xl border border-border-strong bg-surface-elevated p-6 shadow-elevation pointer-events-auto focus:outline-none",
                 className
               )}
             >
               <div className="flex items-center justify-between mb-4">
                 {title && (
-                  <h2 className="text-heading-sm font-display font-semibold tracking-tight">
+                  <h2 id={titleId} className="text-heading-sm font-display font-semibold tracking-tight">
                     {title}
                   </h2>
                 )}

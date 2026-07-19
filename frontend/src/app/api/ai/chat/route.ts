@@ -1,15 +1,37 @@
 import { NextRequest, NextResponse } from "next/server";
 import { GoogleGenerativeAI } from "@google/generative-ai";
+import { z } from "zod";
+import { rateLimit } from "../../../../lib/rate-limit";
 
-const apiKey = process.env.GEMINI_API_KEY;
+const ChatRequestSchema = z.object({
+  messages: z.array(z.object({
+    role: z.enum(['user', 'assistant', 'system']),
+    content: z.string().min(1).max(5000)
+  })).max(50),
+  context: z.record(z.any()).optional()
+});
 
 export async function POST(req: NextRequest) {
+  // Rate limit: 10 requests per minute
+  const rl = rateLimit(req, { limit: 10, windowMs: 60000 });
+  if (!rl.success) {
+    return NextResponse.json({ error: "Too many requests" }, { status: 429 });
+  }
+
+  const apiKey = process.env.GEMINI_API_KEY;
   if (!apiKey) {
     return NextResponse.json({ error: "Gemini API key missing" }, { status: 503 });
   }
 
   try {
-    const { messages, context } = await req.json();
+    const json = await req.json();
+    const parsed = ChatRequestSchema.safeParse(json);
+    
+    if (!parsed.success) {
+      return NextResponse.json({ error: "Invalid request payload", details: parsed.error.format() }, { status: 400 });
+    }
+
+    const { messages, context } = parsed.data;
     
     const ai = new GoogleGenerativeAI(apiKey);
     // Use gemini-1.5-flash for speed and reliability.

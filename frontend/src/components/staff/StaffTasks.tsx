@@ -15,13 +15,7 @@ interface WorkOrder {
   timeReported: string;
 }
 
-const MOCK_ORDERS: WorkOrder[] = [
-  { id: 'wo1', type: 'Cleaning', title: 'Large beverage spill', location: 'Section 104 Concourse', priority: 'High', status: 'Pending', timeReported: '4m ago' },
-  { id: 'wo2', type: 'Maintenance', title: 'Turnstile 4 offline', location: 'Gate A Entry', priority: 'Critical', status: 'In Progress', timeReported: '12m ago' },
-  { id: 'wo3', type: 'Security', title: 'Unauthorized access attempt', location: 'VIP Lounge East', priority: 'High', status: 'Pending', timeReported: '2m ago' },
-  { id: 'wo4', type: 'Medical', title: 'Heat exhaustion', location: 'Gate B Plaza', priority: 'Critical', status: 'Completed', timeReported: '45m ago' },
-  { id: 'wo5', type: 'Maintenance', title: 'Restroom stall door broken', location: 'East Wing Restrooms', priority: 'Routine', status: 'Completed', timeReported: '2h ago' },
-];
+// Mocks removed
 
 const getTypeIcon = (type: string) => {
   switch(type) {
@@ -33,9 +27,15 @@ const getTypeIcon = (type: string) => {
   }
 };
 
+import { useTelemetryStore } from "@/store/useTelemetryStore";
+
 export const StaffTasks = () => {
-  const [orders, setOrders] = React.useState<WorkOrder[]>(MOCK_ORDERS);
+  const allTasks = useTelemetryStore(state => state.staffTasks);
+  const orders = allTasks.filter(t => t.assigneeRole === "Staff") as unknown as WorkOrder[]; // Map StaffTask to WorkOrder structure
   const [filter, setFilter] = React.useState<"All" | "Pending" | "In Progress">("All");
+  
+  const completeTaskStore = useTelemetryStore(state => state.completeStaffTask);
+  const acceptTaskStore = useTelemetryStore(state => state.acceptStaffTask);
 
   const activeOrders = orders.filter(o => o.status !== 'Completed');
   const completedOrders = orders.filter(o => o.status === 'Completed');
@@ -43,11 +43,11 @@ export const StaffTasks = () => {
   const filteredOrders = activeOrders.filter(o => filter === "All" ? true : o.status === filter);
 
   const completeOrder = (id: string) => {
-    setOrders(prev => prev.map(o => o.id === id ? { ...o, status: 'Completed' } : o));
+    if (completeTaskStore) completeTaskStore(id);
   };
 
   const startOrder = (id: string) => {
-    setOrders(prev => prev.map(o => o.id === id ? { ...o, status: 'In Progress' } : o));
+    if (acceptTaskStore) acceptTaskStore(id);
   };
 
   return (

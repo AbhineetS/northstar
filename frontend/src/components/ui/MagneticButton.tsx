@@ -1,7 +1,7 @@
 'use client';
 
 import React, { useRef } from 'react';
-import { motion, useSpring, HTMLMotionProps } from 'framer-motion';
+import { motion, useSpring, HTMLMotionProps, useReducedMotion } from 'framer-motion';
 import { cn } from '@/lib/utils'; // Assuming this exists for class merging
 
 interface MagneticButtonProps extends Omit<HTMLMotionProps<"button">, "ref"> {
@@ -14,6 +14,8 @@ interface MagneticButtonProps extends Omit<HTMLMotionProps<"button">, "ref"> {
 export const MagneticButton = React.forwardRef<HTMLButtonElement, MagneticButtonProps>(
   ({ children, strength = 40, variant = 'primary', size = 'md', className, ...props }, ref) => {
     const buttonRef = useRef<HTMLButtonElement>(null);
+    const prefersReducedMotion = useReducedMotion();
+    const effectiveStrength = prefersReducedMotion ? 0 : strength;
 
     // Sync refs
     React.useImperativeHandle(ref, () => buttonRef.current as HTMLButtonElement);
@@ -32,8 +34,8 @@ export const MagneticButton = React.forwardRef<HTMLButtonElement, MagneticButton
       const distanceX = e.clientX - centerX;
       const distanceY = e.clientY - centerY;
 
-      x.set((distanceX / rect.width) * strength);
-      y.set((distanceY / rect.height) * strength);
+      x.set((distanceX / rect.width) * effectiveStrength);
+      y.set((distanceY / rect.height) * effectiveStrength);
     };
 
     const handleMouseLeave = () => {
@@ -70,7 +72,7 @@ export const MagneticButton = React.forwardRef<HTMLButtonElement, MagneticButton
         }}
         className={cn(
           "relative flex items-center justify-center font-bold tracking-tight",
-          "rounded-full transition-colors duration-700 ease-apple",
+          "rounded-full transition-colors duration-700 ease-apple focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-offset-2 focus-visible:ring-primary",
           "disabled:opacity-50 disabled:pointer-events-none",
           variants[variant],
           sizes[size],

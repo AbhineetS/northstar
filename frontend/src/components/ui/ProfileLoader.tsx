@@ -7,9 +7,13 @@ import { Sparkles } from "lucide-react";
 export interface PersonaDetails {
   id: string;
   title: string;
+  description: string;
   color: string;
   href: string;
+  icon: React.ComponentType<React.SVGProps<SVGSVGElement>>;
   loadingSteps: string[];
+  metric?: number;
+  metricLabel?: string;
 }
 
 interface ProfileLoaderProps {
