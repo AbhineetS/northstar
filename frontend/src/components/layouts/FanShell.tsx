@@ -109,7 +109,7 @@ export const FanShell = ({ children }: FanShellProps) => {
         <div className="absolute inset-0 bg-gradient-to-b from-background via-transparent to-background pointer-events-none opacity-95" />
       </div>
       
-      <main id="main-content" className="absolute inset-0 z-10 pointer-events-none flex flex-col">
+      <main id="main-content" aria-label="Fan Matchday Experience" className="absolute inset-0 z-10 pointer-events-none flex flex-col">
         {/* Children must have pointer-events-auto */}
         <div className="pointer-events-auto flex-1 relative flex flex-col">
           {children}

@@ -26,7 +26,7 @@ describe('useAppStore', () => {
 
   it('sets role correctly', () => {
     useAppStore.getState().setRole('Organizer');
-    expect(useAppStore.getState().role as any).toBe('Organizer');
+    expect(useAppStore.getState().role).toBe('Organizer');
   });
 
   it('sets location and fetches weather', async () => {
@@ -34,7 +34,7 @@ describe('useAppStore', () => {
     
     useAppStore.getState().setLocation(51.5, -0.1);
     
-    expect(useAppStore.getState().location as any).toEqual({ lat: 51.5, lon: -0.1 });
+    expect(useAppStore.getState().location).toEqual({ lat: 51.5, lon: -0.1 });
     expect(weatherService.getCurrentWeather).toHaveBeenCalledWith(51.5, -0.1);
   });
 
@@ -54,7 +54,7 @@ describe('useAppStore', () => {
 
     it('handles error', async () => {
       const error = new Error('Weather Failed');
-      (weatherService.getCurrentWeather as unknown).mockRejectedValueOnce(error);
+      vi.mocked(weatherService.getCurrentWeather).mockRejectedValueOnce(error);
       
       await useAppStore.getState().fetchWeather();
       
@@ -68,7 +68,7 @@ describe('useAppStore', () => {
   describe('fetchMatch', () => {
     it('handles success', async () => {
       const mockMatch = { status: 'Live' };
-      (matchService.getLiveMatch as unknown).mockResolvedValueOnce(mockMatch);
+      vi.mocked(matchService.getLiveMatch).mockResolvedValueOnce(mockMatch);
       
       await useAppStore.getState().fetchMatch();
       
@@ -81,7 +81,7 @@ describe('useAppStore', () => {
   describe('fetchMatchDetails', () => {
     it('handles success', async () => {
       const mockDetails = { homeTeam: 'Team A' };
-      (matchService.getMatchDetails as unknown).mockResolvedValueOnce(mockDetails);
+      vi.mocked(matchService.getMatchDetails).mockResolvedValueOnce(mockDetails);
       
       await useAppStore.getState().fetchMatchDetails();
       
@@ -94,7 +94,7 @@ describe('useAppStore', () => {
   describe('fetchRoute', () => {
     it('handles success with parsed coordinates', async () => {
       const mockRoute = { estimatedMinutes: 20 };
-      (mapService.getOptimizedRoute as unknown).mockResolvedValueOnce(mockRoute);
+      vi.mocked(mapService.getOptimizedRoute).mockResolvedValueOnce(mockRoute);
       
       await useAppStore.getState().fetchRoute('51.5,-0.1', '51.6,-0.2');
       
@@ -106,7 +106,7 @@ describe('useAppStore', () => {
 
     it('handles error', async () => {
       const error = new Error('Route Failed');
-      (mapService.getOptimizedRoute as unknown).mockRejectedValueOnce(error);
+      vi.mocked(mapService.getOptimizedRoute).mockRejectedValueOnce(error);
       
       await useAppStore.getState().fetchRoute('0,0', '1,1');
       

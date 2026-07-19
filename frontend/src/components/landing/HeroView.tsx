@@ -50,12 +50,14 @@ export const HeroView: React.FC<HeroViewProps> = ({ onStart, metrics }) => {
         <div className="flex flex-col sm:flex-row items-center justify-center gap-4 mb-16 w-full sm:w-auto">
           <button 
             onClick={onStart}
+            aria-label="Begin your Northstar matchday experience"
             className="group relative px-10 py-4 bg-primary hover:bg-black text-white font-bold text-[15px] rounded-full overflow-hidden transition-all duration-300 w-full sm:w-auto flex items-center justify-center gap-3 shadow-premium hover:shadow-premium-hover"
           >
             Let&apos;s Begin
-            <span className="transform group-hover:translate-x-1 transition-transform">→</span>
+            <span aria-hidden="true" className="transform group-hover:translate-x-1 transition-transform">→</span>
           </button>
           <button 
+            aria-label="Learn more about Northstar features"
             className="group relative px-10 py-4 bg-transparent hover:bg-black/5 text-primary font-bold text-[15px] rounded-full transition-all duration-300 w-full sm:w-auto border border-border-strong"
           >
             Learn More

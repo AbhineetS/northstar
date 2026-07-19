@@ -68,11 +68,11 @@ export const StaffTasks = () => {
         </div>
       </div>
 
-      {/* Filter Tabs */}
-      <div className="flex space-x-2 mb-4 bg-surface p-1 rounded-xl border border-border-subtle">
+      <div role="group" aria-label="Filter work orders" className="flex space-x-2 mb-4 bg-surface p-1 rounded-xl border border-border-subtle">
         {["All", "Pending", "In Progress"].map((f) => (
           <button
             key={f}
+            aria-pressed={filter === f}
             onClick={() => setFilter(f as "All" | "Pending" | "In Progress")}
             className={`flex-1 py-1.5 text-[10px] font-bold uppercase tracking-wider rounded-lg transition-all ${
               filter === f ? 'bg-primary text-white shadow-sm' : 'text-text-muted hover:bg-neutral-100'
@@ -127,15 +127,26 @@ export const StaffTasks = () => {
 
               <div className="flex gap-2 mt-auto">
                 {order.status === 'Pending' ? (
-                  <button onClick={() => startOrder(order.id)} className="flex-1 py-2.5 bg-primary text-white font-bold text-xs rounded-xl hover:shadow-md transition-shadow flex items-center justify-center">
+                  <button
+                    aria-label={`Accept work order: ${order.title}`}
+                    onClick={() => startOrder(order.id)}
+                    className="flex-1 py-2.5 bg-primary text-white font-bold text-xs rounded-xl hover:shadow-md transition-shadow flex items-center justify-center"
+                  >
                     Accept Order
                   </button>
                 ) : (
-                  <button onClick={() => completeOrder(order.id)} className="flex-1 py-2.5 bg-success text-white font-bold text-xs rounded-xl flex items-center justify-center gap-1.5 hover:shadow-md transition-shadow">
+                  <button
+                    aria-label={`Complete work order: ${order.title}`}
+                    onClick={() => completeOrder(order.id)}
+                    className="flex-1 py-2.5 bg-success text-white font-bold text-xs rounded-xl flex items-center justify-center gap-1.5 hover:shadow-md transition-shadow"
+                  >
                     <CheckCircle2 className="w-4 h-4" /> Mark Complete
                   </button>
                 )}
-                <button className="px-4 py-2.5 bg-surface-elevated text-text-main font-bold text-xs rounded-xl border border-border-subtle flex items-center justify-center">
+                <button
+                  aria-label={`Navigate to: ${order.location}`}
+                  className="px-4 py-2.5 bg-surface-elevated text-text-main font-bold text-xs rounded-xl border border-border-subtle flex items-center justify-center"
+                >
                   <Navigation className="w-4 h-4 mr-1" /> Route
                 </button>
               </div>

@@ -118,15 +118,26 @@ export const VolunteerTasks = () => {
 
               <div className="flex gap-2 mt-auto">
                 {task.status === 'Pending' ? (
-                  <button onClick={() => acceptTask(task.id)} className="flex-1 py-2 bg-primary text-white font-bold text-xs rounded-xl hover:shadow-md transition-shadow">
+                  <button
+                    aria-label={`Accept task: ${task.title}`}
+                    onClick={() => acceptTask(task.id)}
+                    className="flex-1 py-2 bg-primary text-white font-bold text-xs rounded-xl hover:shadow-md transition-shadow"
+                  >
                     Accept Task
                   </button>
                 ) : (
-                  <button onClick={() => completeTask(task.id)} className="flex-1 py-2 bg-success text-white font-bold text-xs rounded-xl flex items-center justify-center gap-1.5 hover:shadow-md transition-shadow">
+                  <button
+                    aria-label={`Complete task: ${task.title}`}
+                    onClick={() => completeTask(task.id)}
+                    className="flex-1 py-2 bg-success text-white font-bold text-xs rounded-xl flex items-center justify-center gap-1.5 hover:shadow-md transition-shadow"
+                  >
                     <CheckCircle2 className="w-4 h-4" /> Mark Complete
                   </button>
                 )}
-                <button className="px-4 py-2 bg-surface-elevated text-text-main font-bold text-xs rounded-xl border border-border-subtle">
+                <button
+                  aria-label={`Navigate to: ${task.location}`}
+                  className="px-4 py-2 bg-surface-elevated text-text-main font-bold text-xs rounded-xl border border-border-subtle"
+                >
                   Navigate
                 </button>
               </div>
