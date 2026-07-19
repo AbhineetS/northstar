@@ -19,7 +19,7 @@ export const VolunteerTasks = () => {
       if (a.status === 'Completed' && b.status !== 'Completed') return 1;
       if (b.status === 'Completed' && a.status !== 'Completed') return -1;
       
-      const priorityWeight = { 'Critical': 3, 'High': 2, 'Routine': 1 };
+      const priorityWeight: Record<string, number> = { 'Critical': 5, 'High': 4, 'Medium': 3, 'Low': 2, 'Routine': 1 };
       const weightA = priorityWeight[a.priority] + (a.aiSuggested ? 0.5 : 0);
       const weightB = priorityWeight[b.priority] + (b.aiSuggested ? 0.5 : 0);
       
