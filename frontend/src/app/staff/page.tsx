@@ -51,27 +51,27 @@ export default function StaffDashboard() {
         <main className="flex-1 relative overflow-hidden bg-background">
           <AnimatePresence mode="popLayout" initial={false}>
             {activeTab === "home" && (
-              <motion.div key="home" initial={{ opacity: 0, scale: 0.98 }} animate={{ opacity: 1, scale: 1 }} exit={{ opacity: 0, scale: 1.02 }} transition={{ duration: 0.4, ease: [0.32, 0.72, 0, 1] }} className="absolute inset-0 overflow-y-auto no-scrollbar">
+              <motion.div key="home" initial={{ opacity: 0, scale: 0.98 }} animate={{ opacity: 1, scale: 1 }} exit={{ opacity: 0, scale: 1.02 }} transition={{ duration: 0.4, ease: [0.32, 0.72, 0, 1] }} className="absolute inset-0">
                 <StaffHome />
               </motion.div>
             )}
             {activeTab === "tasks" && (
-              <motion.div key="tasks" initial={{ opacity: 0, scale: 0.98 }} animate={{ opacity: 1, scale: 1 }} exit={{ opacity: 0, scale: 1.02 }} transition={{ duration: 0.4, ease: [0.32, 0.72, 0, 1] }} className="absolute inset-0 overflow-y-auto no-scrollbar">
+              <motion.div key="tasks" initial={{ opacity: 0, scale: 0.98 }} animate={{ opacity: 1, scale: 1 }} exit={{ opacity: 0, scale: 1.02 }} transition={{ duration: 0.4, ease: [0.32, 0.72, 0, 1] }} className="absolute inset-0">
                 <StaffTasks />
               </motion.div>
             )}
             {activeTab === "copilot" && (
-              <motion.div key="copilot" initial={{ opacity: 0, scale: 0.98 }} animate={{ opacity: 1, scale: 1 }} exit={{ opacity: 0, scale: 1.02 }} transition={{ duration: 0.4, ease: [0.32, 0.72, 0, 1] }} className="absolute inset-0 overflow-y-auto no-scrollbar">
+              <motion.div key="copilot" initial={{ opacity: 0, scale: 0.98 }} animate={{ opacity: 1, scale: 1 }} exit={{ opacity: 0, scale: 1.02 }} transition={{ duration: 0.4, ease: [0.32, 0.72, 0, 1] }} className="absolute inset-0">
                 <StaffCopilot />
               </motion.div>
             )}
             {activeTab === "map" && (
-              <motion.div key="map" initial={{ opacity: 0, scale: 0.98 }} animate={{ opacity: 1, scale: 1 }} exit={{ opacity: 0, scale: 1.02 }} transition={{ duration: 0.4, ease: [0.32, 0.72, 0, 1] }} className="absolute inset-0 overflow-y-auto no-scrollbar">
+              <motion.div key="map" initial={{ opacity: 0, scale: 0.98 }} animate={{ opacity: 1, scale: 1 }} exit={{ opacity: 0, scale: 1.02 }} transition={{ duration: 0.4, ease: [0.32, 0.72, 0, 1] }} className="absolute inset-0">
                 <StaffMap />
               </motion.div>
             )}
             {activeTab === "performance" && (
-              <motion.div key="performance" initial={{ opacity: 0, scale: 0.98 }} animate={{ opacity: 1, scale: 1 }} exit={{ opacity: 0, scale: 1.02 }} transition={{ duration: 0.4, ease: [0.32, 0.72, 0, 1] }} className="absolute inset-0 overflow-y-auto no-scrollbar">
+              <motion.div key="performance" initial={{ opacity: 0, scale: 0.98 }} animate={{ opacity: 1, scale: 1 }} exit={{ opacity: 0, scale: 1.02 }} transition={{ duration: 0.4, ease: [0.32, 0.72, 0, 1] }} className="absolute inset-0">
                 <StaffPerformance />
               </motion.div>
             )}

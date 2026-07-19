@@ -6,7 +6,6 @@ import { useRouter } from "next/navigation";
 import Image from "next/image";
 import { Users, Briefcase, ClipboardList, ShieldCheck, Map, Clock, Navigation } from "lucide-react";
 import { ProfileLoader, PersonaDetails } from "@/components/ui/ProfileLoader";
-import { AuthModal } from "@/components/ui/AuthModal";
 import { PremiumCard } from "@/components/ui/PremiumCard";
 import { PageTransition } from "@/components/ui/PageTransition";
 import dynamic from "next/dynamic";
@@ -50,18 +49,11 @@ export default function LandingPage() {
   const router = useRouter();
   const [view, setView] = React.useState<"hero" | "roles" | "loader">("hero");
   const [selectedPersona, setSelectedPersona] = React.useState<PersonaDetails | null>(null);
-  const [isAuthModalOpen, setIsAuthModalOpen] = React.useState(false);
 
   const handlePersonaSelect = async (persona: PersonaDetails) => {
     setSelectedPersona(persona);
+    // Bypass authentication entirely for seamless access
     setView("loader");
-  };
-
-  const handleAuthSuccess = () => {
-    setIsAuthModalOpen(false);
-    if (selectedPersona) {
-      setView("loader");
-    }
   };
 
   return (
@@ -229,12 +221,6 @@ export default function LandingPage() {
           )}
         </AnimatePresence>
 
-        <AuthModal 
-          isOpen={isAuthModalOpen} 
-          onClose={() => setIsAuthModalOpen(false)} 
-          selectedPersona={selectedPersona}
-          onSuccess={handleAuthSuccess}
-        />
       </div>
     </PageTransition>
   );

@@ -61,7 +61,7 @@ export default function OrganizerDashboard() {
 
   return (
     <PageTransition>
-      <div className="min-h-screen w-full bg-[#0a0a0a] text-primary relative overflow-x-hidden font-sans pb-24">
+      <div className="h-screen w-full bg-[#0a0a0a] text-primary relative overflow-y-auto overflow-x-hidden font-sans pb-24 no-scrollbar">
         <NotificationToaster profile="Organizer" />
         
         {/* Abstract Background */}

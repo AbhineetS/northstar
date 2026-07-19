@@ -156,6 +156,8 @@ export const AuthModal = ({ isOpen, onClose, selectedPersona, onSuccess }: AuthM
           </Button>
         </form>
 
+        {/* Temporarily disabled until Google Provider is enabled in Supabase */}
+        {/*
         <div className="relative">
           <div className="absolute inset-0 flex items-center">
             <span className="w-full border-t border-border-strong" />
@@ -174,6 +176,7 @@ export const AuthModal = ({ isOpen, onClose, selectedPersona, onSuccess }: AuthM
           </svg>
           <span>Google</span>
         </Button>
+        */}
 
         <div className="text-center text-xs text-text-muted mt-4">
           {isLogin ? "Don't have an account?" : "Already have an account?"}
