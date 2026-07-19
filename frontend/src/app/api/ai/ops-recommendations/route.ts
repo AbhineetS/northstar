@@ -4,7 +4,7 @@ import { z } from "zod";
 import { rateLimit } from "../../../../lib/rate-limit";
 
 const OpsRequestSchema = z.object({
-  context: z.record(z.any()).optional()
+  context: z.record(z.string(), z.any()).optional()
 });
 
 export async function POST(req: NextRequest) {

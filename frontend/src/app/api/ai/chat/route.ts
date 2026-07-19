@@ -8,7 +8,7 @@ const ChatRequestSchema = z.object({
     role: z.enum(['user', 'assistant', 'system']),
     content: z.string().min(1).max(5000)
   })).max(50),
-  context: z.record(z.any()).optional()
+  context: z.record(z.string(), z.any()).optional()
 });
 
 export async function POST(req: NextRequest) {
