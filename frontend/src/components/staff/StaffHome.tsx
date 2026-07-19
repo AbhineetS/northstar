@@ -38,7 +38,7 @@ export const StaffHome = () => {
                <div className="w-6 h-6 rounded-full bg-white/20 flex items-center justify-center">
                   <Sparkles className="w-3 h-3 text-white animate-pulse" />
                </div>
-               <h3 className="font-bold text-sm text-white uppercase tracking-widest">AI Command</h3>
+               <h2 className="font-bold text-sm text-white uppercase tracking-widest">AI Command</h2>
             </div>
             <span className="text-[10px] font-bold bg-white/20 px-2 py-1 rounded-lg uppercase tracking-wider text-white">Action Required</span>
           </div>
@@ -60,7 +60,7 @@ export const StaffHome = () => {
 
       {/* Asset Status Summary */}
       <motion.div initial={{ opacity: 0, y: 10 }} animate={{ opacity: 1, y: 0 }} transition={{ delay: 0.2 }} className="pt-2">
-         <h3 className="font-bold text-text-main text-sm mb-3">Zone Assets</h3>
+         <h2 className="font-bold text-text-main text-sm mb-3">Zone Assets</h2>
          <div className="grid grid-cols-2 gap-3">
             <div className="bg-surface p-3 rounded-xl border border-border-subtle flex flex-col items-center text-center shadow-sm">
                <Package className="w-5 h-5 text-success mb-1" />
@@ -78,7 +78,7 @@ export const StaffHome = () => {
       {/* Live Zone Alerts */}
       <motion.div initial={{ opacity: 0, y: 10 }} animate={{ opacity: 1, y: 0 }} transition={{ delay: 0.3 }} className="pt-2">
         <div className="flex items-center justify-between mb-3">
-          <h3 className="font-bold text-text-main text-sm">Active Alerts</h3>
+          <h2 className="font-bold text-text-main text-sm">Active Alerts</h2>
           {activeIncidents.length > 0 && (
              <span className="text-[10px] font-bold bg-danger/10 text-danger px-2 py-1 rounded-full uppercase tracking-wider animate-pulse">
                {activeIncidents.length} Critical
@@ -98,7 +98,7 @@ export const StaffHome = () => {
                 className="bg-danger/5 p-4 rounded-2xl border border-danger/20 flex flex-col group cursor-pointer hover:bg-danger/10 transition-colors"
               >
                 <div className="flex justify-between items-start mb-2">
-                  <h4 className="font-bold text-sm text-danger">{inc.type} Incident</h4>
+                  <h3 className="font-bold text-sm text-danger">{inc.type} Incident</h3>
                   <span className="text-[10px] font-bold text-danger uppercase tracking-wider">+{inc.timeActiveMinutes}m</span>
                 </div>
                 <p className="text-xs text-text-secondary mb-3">{inc.description}</p>

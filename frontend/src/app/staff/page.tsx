@@ -102,7 +102,8 @@ const NavButton = ({ icon, label, isActive, onClick, isCenter }: { icon: React.R
   return (
     <button 
       onClick={onClick}
-      className={`relative flex flex-col items-center justify-center w-14 transition-all duration-300 ease-apple outline-none
+      aria-label={label}
+      className={`relative flex flex-col items-center justify-center w-14 transition-all duration-300 ease-apple focus:outline-none focus-visible:ring-2 focus-visible:ring-primary focus-visible:ring-offset-2
         ${isCenter ? 'h-14 bg-primary text-white rounded-[1.5rem] shadow-premium hover:scale-105' : 'h-14 rounded-2xl'}
         ${!isCenter && isActive ? 'text-primary' : !isCenter ? 'text-text-muted hover:text-text-secondary hover:bg-black/5' : ''}
       `}
