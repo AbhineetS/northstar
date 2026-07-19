@@ -1,6 +1,7 @@
 import type { Metadata } from "next";
 import { Toaster } from "sonner";
 import { OfflineDetector } from "@/components/ui/OfflineDetector";
+import { RoleSwitcher } from "@/components/ui/RoleSwitcher";
 import { Plus_Jakarta_Sans } from "next/font/google";
 import "./globals.css";
 
@@ -30,16 +31,17 @@ export default function RootLayout({
         </a>
         <OfflineDetector />
         
-        {/* Subtle dynamic breathing background for light mode */}
+        {/* Subtle dynamic breathing background for light mode (120fps optimized) */}
         <div className="fixed inset-0 z-[-2] bg-white" />
-        <div className="fixed inset-0 z-[-1] opacity-50 pointer-events-none overflow-hidden">
-          <div className="absolute top-[-20%] left-[-10%] w-[60vw] h-[60vw] bg-primary/5 rounded-full blur-[120px] animate-blob" />
-          <div className="absolute bottom-[-20%] right-[-10%] w-[50vw] h-[50vw] bg-fifa-blue/5 rounded-full blur-[120px] animate-blob animation-delay-2000" />
-          <div className="absolute top-[20%] right-[20%] w-[40vw] h-[40vw] bg-fifa-red/5 rounded-full blur-[120px] animate-blob animation-delay-4000" />
+        <div className="fixed inset-0 z-[-1] opacity-50 pointer-events-none overflow-hidden transform-gpu">
+          <div className="absolute top-[-20%] left-[-10%] w-[60vw] h-[60vw] rounded-full animate-blob bg-[radial-gradient(circle,rgba(24,24,27,0.05)_0%,transparent_70%)]" />
+          <div className="absolute bottom-[-20%] right-[-10%] w-[50vw] h-[50vw] rounded-full animate-blob animation-delay-2000 bg-[radial-gradient(circle,rgba(30,41,59,0.05)_0%,transparent_70%)]" />
+          <div className="absolute top-[20%] right-[20%] w-[40vw] h-[40vw] rounded-full animate-blob animation-delay-4000 bg-[radial-gradient(circle,rgba(51,65,85,0.05)_0%,transparent_70%)]" />
         </div>
         
         {children}
         
+        <RoleSwitcher />
         <Toaster theme="light" position="top-center" />
       </body>
     </html>
