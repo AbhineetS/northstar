@@ -21,7 +21,7 @@ export function RoleSwitcher() {
           whileHover={{ scale: 1.05 }}
           whileTap={{ scale: 0.95 }}
           onClick={() => router.push("/")}
-          className="fixed bottom-6 left-6 z-[9999] flex items-center justify-center w-12 h-12 bg-primary text-white rounded-full shadow-premium hover:bg-primary-hover transition-colors"
+          className="fixed top-6 left-6 z-[99999] flex items-center justify-center w-12 h-12 bg-primary text-white rounded-full shadow-premium hover:bg-primary-hover transition-colors"
           aria-label="Back to Role Selection"
         >
           <Home className="w-5 h-5" />

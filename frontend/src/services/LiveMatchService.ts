@@ -60,8 +60,8 @@ export class LiveMatchService implements IMatchService {
     // Fallback if data.events is null or API fails
     return {
       id: matchId,
-      homeTeam: "Argentina", homeTeamId: "arg",
-      awayTeam: "France", awayTeamId: "fra",
+      homeTeam: "USA", homeTeamId: "usa",
+      awayTeam: "England", awayTeamId: "eng",
       kickoffTime: new Date(Date.now() + 1000 * 60 * 60 * 24), // tomorrow
       venue: "MetLife Stadium", gate: "Gate D", section: "143", seat: "Row 12, Seat 4",
     };
@@ -97,8 +97,8 @@ export class LiveMatchService implements IMatchService {
     // Fallback if data.events is null or API fails
     return {
       id: matchId, minute: 45, status: "Live",
-      homeScore: 2, awayScore: 1, homePossession: 58, awayPossession: 42,
-      events: [{ minute: 12, type: "Goal", player: "Lionel Messi", teamId: "arg", detail: "" }]
+      homeScore: 1, awayScore: 1, homePossession: 55, awayPossession: 45,
+      events: [{ minute: 12, type: "Goal", player: "Christian Pulisic", teamId: "usa", detail: "" }]
     };
   }
 

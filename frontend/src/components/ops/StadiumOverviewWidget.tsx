@@ -1,8 +1,7 @@
 'use client';
 
-import React, { useEffect, useState } from 'react';
-import { motion, AnimatePresence } from 'framer-motion';
-import { MapIcon, AlertTriangle, Users } from 'lucide-react';
+import * as React from 'react';
+import { MapIcon, AlertTriangle } from 'lucide-react';
 import { PremiumCard } from '@/components/ui/PremiumCard';
 import { MapContainer } from '@/components/map/MapContainer';
 import { HeatmapLayer } from '@/components/map/HeatmapLayer';
@@ -24,10 +23,9 @@ const generateMockHotspots = (): Hotspot[] => [
 ];
 
 export function StadiumOverviewWidget() {
-  const [hotspots, setHotspots] = useState<Hotspot[]>(generateMockHotspots);
-  const [activeZone, setActiveZone] = useState<string | null>(null);
+  const [hotspots, setHotspots] = React.useState<Hotspot[]>(generateMockHotspots);
 
-  useEffect(() => {
+  React.useEffect(() => {
     // Initial load handled by state
 
     // Simulate real-time heatmap shifting
@@ -42,16 +40,6 @@ export function StadiumOverviewWidget() {
 
     return () => clearInterval(interval);
   }, []);
-
-  const getIntensityColor = (intensity: string) => {
-    switch (intensity) {
-      case 'critical': return 'var(--danger)';
-      case 'high': return 'var(--warning)';
-      case 'medium': return 'var(--info)';
-      case 'low': return 'var(--success)';
-      default: return 'var(--border-strong)';
-    }
-  };
 
   return (
     <PremiumCard variant="glass" className="h-full flex flex-col p-0 overflow-hidden relative group border-border-subtle shadow-elevation-high">
