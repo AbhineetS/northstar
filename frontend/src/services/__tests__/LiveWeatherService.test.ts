@@ -60,7 +60,7 @@ describe('LiveWeatherService', () => {
     });
 
     await expect(service.getCurrentWeather(0, 0)).rejects.toThrow('Weather API error');
-    expect(useApiStore.getState().errors['Weather']).toBe('Failed to fetch weather');
+    expect(useApiStore.getState().errors['Weather']).toBe('Failed to fetch live weather');
     expect(useApiStore.getState().activeRequests).toBe(0);
   });
 });

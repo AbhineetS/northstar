@@ -8,9 +8,11 @@ export default defineConfig({
     environment: 'jsdom',
     globals: true,
     setupFiles: './vitest.setup.ts',
-    alias: {
-      '@': path.resolve(__dirname, './src')
-    },
+    alias: [
+      { find: '@', replacement: path.resolve(__dirname, './src') },
+      { find: 'react-map-gl/maplibre', replacement: path.resolve(__dirname, './__mocks__/react-map-gl.js') },
+      { find: 'react-map-gl', replacement: path.resolve(__dirname, './__mocks__/react-map-gl.js') }
+    ],
     coverage: {
       provider: 'v8',
       include: ['src/**/*.{ts,tsx}'],

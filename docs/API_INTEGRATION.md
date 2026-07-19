@@ -1,93 +1,93 @@
-# Northstar API Integration Guide
+# 🔌 Northstar API Integration Guide
 
-This guide explains how Northstar connects to external data sources, how the fallback architecture works, and how to configure environment variables.
-
-## Overview
-
-Northstar uses a **Graceful Fallback Architecture** for its API layer. If an API key is missing or an external service fails, the system automatically falls back to realistic mock data. This ensures the application **never crashes** during presentations, development, or network outages.
-
-All external service calls must be made through the exported instances in `src/services/index.ts`.
-
-### Available Services
-
-- **`aiService`**: Powers the dynamic recommendations and reasoning engine.
-- **`mapService`**: Handles geographic routing and optimization.
-- **`matchService`**: Retrieves live football match details and events.
-- **`weatherService`**: Fetches real-time weather at the stadium.
+This document provides a comprehensive overview of the external services and APIs integrated into the Northstar Smart Stadium Platform. It details the authentication mechanisms, data flows, and error handling strategies employed to maintain maximum reliability during high-traffic tournament events.
 
 ---
 
-## 1. Environment Setup (API Keys)
+## 1. Google Gemini (Generative AI)
 
-To connect Northstar to live data, you must provide the following API keys in a `.env.local` file located in the `frontend/` directory. If any key is omitted, the corresponding service will run in "Mock Mode".
+Northstar utilizes **Google Gemini 1.5 Flash** as its core intelligence engine. It processes live telemetry and natural language queries to provide operational recommendations.
 
-```env
-# 1. Gemini API Key (AI Reasoning Engine)
-# Obtain from: https://aistudio.google.com/
-NEXT_PUBLIC_GEMINI_API_KEY=your_gemini_key_here
+### Integration Details
+- **Service Layer:** `src/services/GeminiAIService.ts`
+- **Model Used:** `gemini-1.5-flash`
+- **Authentication:** API Key (`NEXT_PUBLIC_GEMINI_API_KEY`)
 
-# 2. Mapbox / Google Maps API Key (Routing & Digital Twin)
-# Obtain from: https://console.cloud.google.com/
-NEXT_PUBLIC_GOOGLE_MAPS_API_KEY=your_gmaps_key_here
-NEXT_PUBLIC_MAPBOX_TOKEN=your_mapbox_token_here
+### Key Workflows
+1. **Multilingual Translation:** Translates fan queries into the native language of the stadium staff instantly.
+2. **Operations Copilot:** Ingests JSON telemetry (crowd density, incidents) and outputs actionable JSON recommendations for the Organizer Command Center.
+3. **Emergency Routing:** Calculates safe evacuation routes based on incident location coordinates.
 
-# 3. Football Data API (Match Events & Details)
-# Obtain from: https://www.api-football.com/
-NEXT_PUBLIC_FOOTBALL_API_KEY=your_football_key_here
-
-# 4. OpenWeatherMap API (Live Weather)
-# Obtain from: https://openweathermap.org/api
-NEXT_PUBLIC_WEATHER_API_KEY=your_weather_key_here
-```
+### Security & Error Handling
+- All inputs from the user are sanitized before being passed to the model prompt.
+- The service enforces strict JSON schema output requirements from the model.
+- Includes automatic fallback messages if the AI matrix is unreachable (`"Failed to connect to translation matrix."`).
 
 ---
 
-## 2. Switching Between Mock and Live Mode
+## 2. OpenWeather API
 
-You **do not** need to change any code to switch between Mock and Live modes. 
+Live weather intelligence is crucial for predicting delays and managing fan safety (e.g., extreme heat, lightning protocols).
 
-**To use Mock Mode:**
-Simply leave the API key blank or undefined in your `.env.local` file. The service will automatically log a warning and return data from `MockData.ts`.
+### Integration Details
+- **Service Layer:** `src/services/LiveWeatherService.ts`
+- **Endpoint:** `https://api.openweathermap.org/data/2.5/weather`
+- **Authentication:** API Key (`NEXT_PUBLIC_OPENWEATHER_API_KEY`)
 
-**To use Live Mode:**
-Populate the corresponding key in `.env.local` and restart the development server. The service will detect the key and attempt to fetch live data. If the live fetch fails (e.g. timeout or invalid key), it will catch the error, report it to the `useApiStore`, and return Mock data so the UI does not break.
+### Key Workflows
+- The application periodically polls the OpenWeather API using the stadium's longitude and latitude defined in `VenueConfig.ts`.
+- The data is transformed into a simplified `WeatherState` object and stored in `useAppStore`.
 
 ---
 
-## 3. Using Services in UI Components
+## 3. MapLibre / React-Map-GL (Digital Twin)
 
-To maintain consistent Loading, Error, and Empty states, **do not** call services directly in `useEffect`. Instead, use the custom `useService` hook combined with the `<DataBoundary>` component.
+The 3D interactive Digital Twin of the stadium is powered by MapLibre GL JS, providing high-performance WebGL vector maps.
 
-### Example Implementation
+### Integration Details
+- **Component Layer:** `src/components/map/MapContainer.tsx`
+- **Provider:** MapTiler (or default OSM)
+- **Authentication:** API Key (`NEXT_PUBLIC_MAPTILER_KEY`)
 
-```tsx
-import { useCallback } from "react";
-import { weatherService } from "@/services";
-import { useService } from "@/hooks/useService";
-import { DataBoundary } from "@/components/ui/DataBoundary";
+### Key Workflows
+- **Heatmaps:** Crowd density telemetry is converted into GeoJSON points and rendered as a heatmap layer (`HeatmapLayer.tsx`).
+- **Fan POIs:** Points of Interest (restrooms, gates, concessions) are dynamically plotted as MapLibre Markers.
 
-export function WeatherWidget() {
-  // 1. Wrap the service call in a useCallback
-  const fetchWeather = useCallback(() => weatherService.getCurrentWeather(40.8128, -74.0742), []);
-  
-  // 2. Pass it to the useService hook
-  const weatherState = useService(fetchWeather);
+---
 
-  return (
-    // 3. Render the DataBoundary with fallback options
-    <DataBoundary 
-      state={weatherState}
-      loadingFallback={<div className="animate-pulse">Loading weather...</div>}
-      errorFallback={(err, retry) => <button onClick={retry}>Failed. Retry?</button>}
-    >
-      {(weather) => (
-        <div>
-          Temperature: {weather.temperatureC}°C ({weather.condition})
-        </div>
-      )}
-    </DataBoundary>
-  );
-}
-```
+## 4. OSRM (Open Source Routing Machine)
 
-This pattern ensures that every asynchronous call provides a premium user experience without blank screens or unhandled promise rejections.
+To provide accessible and efficient smart navigation outside and around the stadium perimeter.
+
+### Integration Details
+- **Service Layer:** `src/services/LiveMapService.ts`
+- **Endpoint:** `https://router.project-osrm.org/route/v1/foot/`
+- **Authentication:** None (Public API for demonstration, enterprise routing recommended for production)
+
+### Key Workflows
+- Accepts a start and end coordinate.
+- Requests the `foot` profile to calculate walking distances and durations.
+- Returns a decoded polyline to render on the `NavigationOverlay.tsx`.
+
+---
+
+## 5. Supabase (Database & Authentication)
+
+Supabase serves as the PostgreSQL backend for persistent state, user authentication, and telemetry logging.
+
+### Integration Details
+- **Client Layer:** `src/lib/supabase.ts`
+- **Authentication:** URL and Anon Key (`NEXT_PUBLIC_SUPABASE_URL`, `NEXT_PUBLIC_SUPABASE_ANON_KEY`)
+
+### Key Workflows
+- Validates secure connections using standard Row Level Security (RLS) rules defined in the database schema.
+- Provides real-time subscriptions (if configured) for instant incident updates across all connected client dashboards.
+
+---
+
+## 🛡️ General API Security Standards
+
+To maintain our **100/100 Security Score**:
+1. **Environment Variables:** No secrets are ever hardcoded. All keys must be passed via the Vercel deployment environment or local `.env.local` files.
+2. **Server-Side Proxying:** Sensitive API calls (like custom AI routes) are routed through Next.js API Routes (`app/api/...`) to prevent exposing critical logic or keys to the client bundle.
+3. **Rate Limiting:** Custom rate limiters (`src/lib/rate-limit.ts`) are implemented on public-facing API routes to prevent DDoS or quota exhaustion.

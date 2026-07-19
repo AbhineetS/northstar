@@ -1,0 +1,1 @@
+export default function Map() { return null; }; export const Source = () => null; export const Layer = () => null; export const Marker = () => null; export const Popup = () => null; export const NavigationControl = () => null; export const FullscreenControl = () => null; export const ScaleControl = () => null; export const GeolocateControl = () => null;
